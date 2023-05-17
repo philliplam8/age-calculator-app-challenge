@@ -3,7 +3,7 @@ function TimeDisplay(props: {
   textValue: string;
 }): JSX.Element {
   return (
-    <div className="flex flex-row gap-3 font-extrabold text-left text-[100px] italic">
+    <div className="flex flex-row gap-3 font-extrabold text-left text-[60px] sm:text-[75px] md:text-[100px] italic">
       <p className="text-purple">{props.numValue}</p>
       <p className="text-black">{props.textValue}</p>
     </div>
