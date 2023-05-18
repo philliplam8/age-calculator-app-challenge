@@ -1,15 +1,17 @@
 import { Layout } from "./components/UI/Layout";
 import { AgeInput } from "./components/AgeInput";
-import { Divider } from "./components/UI/Divider";
 import { TimeDisplayGroup } from "./components/TimeDisplayGroup";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
-    <Layout>
-      <AgeInput />
-      <Divider />
-      <TimeDisplayGroup />
-    </Layout>
+    <div className="h-full flex flex-col justify-between">
+      <Layout>
+        <AgeInput />
+        <TimeDisplayGroup />
+      </Layout>
+      <Footer />
+    </div>
   );
 }
 

@@ -1,11 +1,17 @@
-export default function TextField(props: {
+import { forwardRef } from "react";
+
+interface Props {
   label: string;
   placeholder: string;
   max: number;
   min?: number;
   error?: boolean;
   errorMessage?: string;
-}): JSX.Element {
+}
+
+export type Ref = HTMLInputElement;
+
+export const TextField = forwardRef<Ref, Props>(function (props, ref) {
   return (
     <div className="flex flex-col gap-y-2">
       {/* Input Field Label */}
@@ -19,6 +25,7 @@ export default function TextField(props: {
 
       {/* Input Field */}
       <input
+        ref={ref}
         id={props.label}
         name={props.label}
         type="number"
@@ -34,4 +41,4 @@ export default function TextField(props: {
       )}
     </div>
   );
-}
+});
