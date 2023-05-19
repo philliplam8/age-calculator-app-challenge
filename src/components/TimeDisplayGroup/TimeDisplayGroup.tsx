@@ -12,19 +12,18 @@ export default function TimeDisplayGroup(): JSX.Element {
     return (
       <div className="flex flex-row gap-3 font-extrabold text-left text-[60px] sm:text-[75px] md:text-[100px] italic">
         <p className="text-purple">{props.value}</p>
-        <p className="text-black">{props.unit}</p>
+        <p className="text-black">{`${props.unit}${
+          props.value !== "1" ? "s" : ""
+        }`}</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col leading-tight">
-      <TimeDisplay value={ageYears} unit={`year${ageYears !== 1 ? "s" : ""}`} />
-      <TimeDisplay
-        value={ageMonths}
-        unit={`month${ageMonths !== 1 ? "s" : ""}`}
-      />
-      <TimeDisplay value={ageDays} unit={`day${ageDays !== 1 ? "s" : ""}`} />
+      <TimeDisplay value={ageYears} unit={"year"} />
+      <TimeDisplay value={ageMonths} unit={"month"} />
+      <TimeDisplay value={ageDays} unit={"day"} />
     </div>
   );
 }
