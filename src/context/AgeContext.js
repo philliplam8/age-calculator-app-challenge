@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const DEFAULT_TIME_VALUE = "--"
+export const DEFAULT_TIME_VALUE = "--"
 
 export const AgeContext = createContext();
 

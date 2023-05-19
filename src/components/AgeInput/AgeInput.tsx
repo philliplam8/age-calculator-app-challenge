@@ -1,5 +1,5 @@
 import { useState, useContext, useRef, useEffect } from "react";
-import { AgeContext } from "../../context/AgeContext";
+import { AgeContext, DEFAULT_TIME_VALUE } from "../../context/AgeContext";
 import { TextField } from "../UI/TextField";
 import { Divider } from "../Divider";
 import { calculateAge } from "../../util";
@@ -44,7 +44,7 @@ export default function AgeInput(): JSX.Element {
   const [ageMonths, setAgeMonths] = ageMonthsValue;
   const [ageDays, setAgeDays] = ageDaysValue;
 
-  const handleButtonClick = () => {
+  const handleSubmitClick = () => {
     if (inputDayRef?.current?.value) {
       setBirthDay(inputDayRef.current.value);
     }
@@ -68,6 +68,27 @@ export default function AgeInput(): JSX.Element {
       }
       setBirthYear(inputYear);
     }
+  };
+
+  const handleResetClick = () => {
+    // Clear Input Fields
+    if (inputDayRef?.current?.value) {
+      inputDayRef.current.value = "";
+      setBirthDay("");
+    }
+    if (inputMonthRef?.current?.value) {
+      inputMonthRef.current.value = "";
+      setBirthMonth("");
+    }
+    if (inputYearRef?.current?.value) {
+      inputYearRef.current.value = "";
+      setBirthYear("");
+    }
+
+    // Clear Displayed Age
+    setAgeYears(DEFAULT_TIME_VALUE);
+    setAgeMonths(DEFAULT_TIME_VALUE);
+    setAgeDays(DEFAULT_TIME_VALUE);
   };
 
   useEffect(() => {
@@ -113,7 +134,15 @@ export default function AgeInput(): JSX.Element {
           ref={inputYearRef}
         />
       </div>
-      <Divider handleClick={handleButtonClick} />
+      <Divider
+        handleClick={
+          ageYears !== DEFAULT_TIME_VALUE &&
+          ageMonths !== DEFAULT_TIME_VALUE &&
+          ageDays !== DEFAULT_TIME_VALUE
+            ? handleResetClick
+            : handleSubmitClick
+        }
+      />
     </div>
   );
 }
