@@ -13,7 +13,15 @@ export function calculateAge(day: number, month: number, year: number) {
       : diffMonths * 30.5;
 
   console.log(`${diffYears} years, ${diffMonths} months, ${diffDays} days`);
-  return `${Math.floor(diffYears)} years, ${Math.floor(
-    diffMonths
-  )} months, ${Math.floor(diffDays)} days.`;
+  console.log(
+    `${Math.floor(diffYears)} years, ${Math.floor(
+      diffMonths
+    )} months, ${Math.floor(diffDays)} days.`
+  );
+
+  return {
+    years: Math.floor(diffYears),
+    months: Math.floor(diffMonths),
+    days: Math.floor(diffDays),
+  };
 }

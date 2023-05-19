@@ -1,7 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
+import { AgeContext } from "../../context/AgeContext";
 import { TextField } from "../UI/TextField";
 import { Divider } from "../Divider";
 import { calculateAge } from "../../util";
+
+interface Age {
+  years: number;
+  months: number;
+  days: number;
+}
 
 // const ERROR_MESSAGE = {
 //   EMPTY: "This field is required",
@@ -12,7 +19,7 @@ import { calculateAge } from "../../util";
 // };
 
 const INITIAL_ERROR_MESSAGE = {
-  day: "",
+  birthDay: "",
   month: "",
   year: "",
 };
@@ -23,42 +30,54 @@ export default function AgeInput(): JSX.Element {
   const inputMonthRef = useRef<HTMLInputElement>(null);
   const inputYearRef = useRef<HTMLInputElement>(null);
 
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const [final, setFinal] = useState("");
+  // User Input
+  const [birthDay, setBirthDay] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthYear, setBirthYear] = useState("");
+
+  // Calculated Age
+  const { ageYearsValue, ageMonthsValue, ageDaysValue } =
+    useContext(AgeContext);
+  const [ageYears, setAgeYears] = ageYearsValue;
+  const [ageMonths, setAgeMonths] = ageMonthsValue;
+  const [ageDays, setAgeDays] = ageDaysValue;
 
   const handleButtonClick = () => {
     if (inputDayRef?.current?.value) {
-      setDay(inputDayRef.current.value);
+      setBirthDay(inputDayRef.current.value);
     }
     if (inputMonthRef?.current?.value) {
-      setMonth(inputMonthRef.current.value);
+      setBirthMonth(inputMonthRef.current.value);
     }
     if (inputYearRef?.current?.value) {
-      setYear(inputYearRef.current.value);
+      setBirthYear(inputYearRef.current.value);
     }
   };
 
   useEffect(() => {
-    if (day !== "" && month !== "" && year !== "") {
-      setFinal(calculateAge(parseInt(day), parseInt(month), parseInt(year)));
+    // Calculate only if all fields are filled in
+    if (birthDay !== "" && birthMonth !== "" && birthYear !== "") {
+      const age: Age = calculateAge(
+        parseInt(birthDay),
+        parseInt(birthMonth),
+        parseInt(birthYear)
+      );
+
+      setAgeDays(age.days);
+      setAgeMonths(age.months);
+      setAgeYears(age.years);
     }
-  }, [day, month, year]);
+  }, [birthDay, birthMonth, birthYear, setAgeDays, setAgeMonths, setAgeYears]);
 
   return (
     <div className="flex flex-col">
-      <div className="mb-12 flex flex-col justify-between border-purple border-2">
-        <input type="text" ref={inputDayRef} />
-        <div>Your age is {final}</div>
-      </div>
       <div className="flex flex-row gap-4 sm:gap-8">
         <TextField
           label={"Day"}
           placeholder="DD"
           max={31}
           min={1}
-          errorMessage={errorMessage.day}
+          errorMessage={errorMessage.birthDay}
           ref={inputDayRef}
         />
         <TextField

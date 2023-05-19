@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AgeContext } from "../../context/AgeContext";
 
 export default function TimeDisplayGroup(): JSX.Element {
-  const [years, setYears] = useState("--");
-  const [months, setMonths] = useState("--");
-  const [days, setDays] = useState("--");
+  const { ageYearsValue, ageMonthsValue, ageDaysValue } =
+    useContext(AgeContext);
+  const [ageYears, setAgeYears] = ageYearsValue;
+  const [ageMonths, setAgeMonths] = ageMonthsValue;
+  const [ageDays, setAgeDays] = ageDaysValue;
 
   function TimeDisplay(props: { value: string; unit: string }): JSX.Element {
     return (
@@ -16,9 +19,15 @@ export default function TimeDisplayGroup(): JSX.Element {
 
   return (
     <div className="flex flex-col leading-tight">
-      <TimeDisplay value={years} unit={`year${years !== "1" ? "s" : ""}`} />
-      <TimeDisplay value={months} unit={`month${months !== "1" ? "s" : ""}`} />
-      <TimeDisplay value={days} unit={`day${days !== "1" ? "s" : ""}`} />
+      <TimeDisplay
+        value={ageYears}
+        unit={`year${ageYears !== "1" ? "s" : ""}`}
+      />
+      <TimeDisplay
+        value={ageMonths}
+        unit={`month${ageMonths !== "1" ? "s" : ""}`}
+      />
+      <TimeDisplay value={ageDays} unit={`day${ageDays !== "1" ? "s" : ""}`} />
     </div>
   );
 }
