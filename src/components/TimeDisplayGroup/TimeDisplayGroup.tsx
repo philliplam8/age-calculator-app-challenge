@@ -19,15 +19,12 @@ export default function TimeDisplayGroup(): JSX.Element {
 
   return (
     <div className="flex flex-col leading-tight">
-      <TimeDisplay
-        value={ageYears}
-        unit={`year${ageYears !== "1" ? "s" : ""}`}
-      />
+      <TimeDisplay value={ageYears} unit={`year${ageYears !== 1 ? "s" : ""}`} />
       <TimeDisplay
         value={ageMonths}
-        unit={`month${ageMonths !== "1" ? "s" : ""}`}
+        unit={`month${ageMonths !== 1 ? "s" : ""}`}
       />
-      <TimeDisplay value={ageDays} unit={`day${ageDays !== "1" ? "s" : ""}`} />
+      <TimeDisplay value={ageDays} unit={`day${ageDays !== 1 ? "s" : ""}`} />
     </div>
   );
 }
