@@ -26,11 +26,13 @@ const INITIAL_ERROR_MESSAGE = {
 
 export default function AgeInput(): JSX.Element {
   const [errorMessage, setErrorMessage] = useState(INITIAL_ERROR_MESSAGE);
+
+  // useRef Hooks for Input fields "Day", "Month", and "Year"
   const inputDayRef = useRef<HTMLInputElement>(null);
   const inputMonthRef = useRef<HTMLInputElement>(null);
   const inputYearRef = useRef<HTMLInputElement>(null);
 
-  // User Input
+  // User Input Birth Dates
   const [birthDay, setBirthDay] = useState("");
   const [birthMonth, setBirthMonth] = useState("");
   const [birthYear, setBirthYear] = useState("");
@@ -50,7 +52,21 @@ export default function AgeInput(): JSX.Element {
       setBirthMonth(inputMonthRef.current.value);
     }
     if (inputYearRef?.current?.value) {
-      setBirthYear(inputYearRef.current.value);
+      let inputYear: string = inputYearRef.current.value;
+
+      /**
+       * Note JavaScript Date constructor will accept integer values
+       * representing the year from 0 to 99 and map to the years 1900 to 1999.
+       * To provide better UX, input value will auto-prefix "19-" or "190-"
+       * to these situations.
+       */
+      if (inputYear.length === 2) {
+        inputYearRef.current.value = `19${inputYear}`;
+      }
+      if (inputYear.length === 1) {
+        inputYearRef.current.value = `190${inputYear}`;
+      }
+      setBirthYear(inputYear);
     }
   };
 
@@ -90,7 +106,7 @@ export default function AgeInput(): JSX.Element {
         />
         <TextField
           label={"Year"}
-          placeholder="YY"
+          placeholder="YYYY"
           max={99}
           min={0}
           errorMessage={errorMessage.year}
