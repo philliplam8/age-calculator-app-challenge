@@ -1,6 +1,7 @@
-import { SetStateAction, useState, useRef, MutableRefObject } from "react";
+import { useState, useRef, useEffect } from "react";
 import { TextField } from "../UI/TextField";
 import { Divider } from "../Divider";
+import { calculateAge } from "../../util";
 
 // const ERROR_MESSAGE = {
 //   EMPTY: "This field is required",
@@ -25,6 +26,7 @@ export default function AgeInput(): JSX.Element {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  const [final, setFinal] = useState("");
 
   const handleButtonClick = () => {
     if (inputDayRef?.current?.value) {
@@ -38,14 +40,17 @@ export default function AgeInput(): JSX.Element {
     }
   };
 
+  useEffect(() => {
+    if (day !== "" && month !== "" && year !== "") {
+      setFinal(calculateAge(parseInt(day), parseInt(month), parseInt(year)));
+    }
+  }, [day, month, year]);
+
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between border-purple border-1">
+      <div className="mb-12 flex flex-col justify-between border-purple border-2">
         <input type="text" ref={inputDayRef} />
-
-        <div>Day Value: {day}</div>
-        <div>Month Value: {month}</div>
-        <div>Year Value: {year}</div>
+        <div>Your age is {final}</div>
       </div>
       <div className="flex flex-row gap-4 sm:gap-8">
         <TextField
