@@ -16,9 +16,9 @@ export default function TimeDisplayGroup(): JSX.Element {
 
   return (
     <div className="flex flex-col leading-tight">
-      <TimeDisplay value={years} unit="years" />
-      <TimeDisplay value={months} unit="months" />
-      <TimeDisplay value={days} unit="days" />
+      <TimeDisplay value={years} unit={`year${years !== "1" ? "s" : ""}`} />
+      <TimeDisplay value={months} unit={`month${months !== "1" ? "s" : ""}`} />
+      <TimeDisplay value={days} unit={`day${days !== "1" ? "s" : ""}`} />
     </div>
   );
 }
